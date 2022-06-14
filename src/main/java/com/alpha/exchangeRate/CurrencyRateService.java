@@ -1,5 +1,6 @@
 package com.alpha.exchangeRate;
 
+import com.alpha.exchangeRate.exceptions.RateProviderException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,23 +15,23 @@ public class CurrencyRateService
     RateProvider rateProvider;
 
     @Autowired
-    public CurrencyRateService(/*@Qualifier("openExchangeRateProvider") */RateProvider rateProvider)
+    public CurrencyRateService(@Qualifier("openExchangeRateProvider")RateProvider rateProvider)
     {
         this.rateProvider = rateProvider;
     }
 
     /**
-     *This method represents changes of currency rate compared to yesterday
-     * @param fromCurrencyId - iso 4217 currency id represented as string
-     * @param toCurrencyId - iso 4217 currency id represented as string (base currency)
-     * @return -1 if one has to pay less fromCurrencyId to buy toCurrencyId
+     * This method represents changes of currency rate compared to yesterday
+     * @param quoteCurrencyId - iso 4217 currency id represented as string
+     * @param baseCurrencyId - iso 4217 currency id represented as string (base currency)
+     * @return -1 if one has to pay less quoteCurrencyId to buy baseCurrencyId
      * 0 rate did not change
-     * 1 if one has to pay more fromCurrencyId to buy toCurrencyId
+     * 1 if one has to pay more quoteCurrencyId to buy baseCurrencyId
      */
-    public Integer getRecentRateChange(String fromCurrencyId, String toCurrencyId)
+    public Integer getRecentRateDynamics(String quoteCurrencyId, String baseCurrencyId) throws RateProviderException
     {
-        var currentRate = rateProvider.getCurrentCurrencyRate(fromCurrencyId, toCurrencyId);
-        var yesterdayRate = rateProvider.getHistoricalCurrencyRate(fromCurrencyId, toCurrencyId,
+        var currentRate = rateProvider.getCurrentCurrencyRate(quoteCurrencyId, baseCurrencyId);
+        var yesterdayRate = rateProvider.getHistoricalCurrencyRate(quoteCurrencyId, baseCurrencyId,
                 LocalDate.now().minusDays(1));
 
         return currentRate.compareTo(yesterdayRate);

@@ -1,6 +1,8 @@
 package com.alpha.exchangeRate;
 
+import com.alpha.exchangeRate.exceptions.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,8 +19,14 @@ public class CurrencyRateController
     }
 
     @GetMapping("/rate-to/usd")
-    public Integer getExchangeRateToDollar(@RequestParam("currencyId") String fromCurrencyId)
+    public ResponseEntity<?> getRecentExchangeRateToDollarDynamics(
+            @RequestParam("quoteCurrencyId") String quoteCurrencyId) throws RateProviderException
     {
-        return currencyRateService.getRecentRateChange(fromCurrencyId, "USD");
+        // See return value of getRecentRateChange(...)
+        Integer currencyRateDynamics = null;
+        return ResponseEntity.ok(
+                "{\n" +
+                      "\t\"recentRateChange\": " + currencyRateService.getRecentRateDynamics(quoteCurrencyId, "USD")
+                      + "\n}");
     }
 }
