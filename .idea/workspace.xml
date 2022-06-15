@@ -5,7 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d98acbd2-cf61-4d94-adae-46d1139dae6c" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/alpha/media/giphy/GiphyClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/CurrencyRateController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/CurrencyRateController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/RateProviders/OpenExchangeRate/OpenExchangeRateErrorDecoder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/RateProviders/OpenExchangeRate/OpenExchangeRateErrorDecoder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/RateProviders/OpenExchangeRate/OpenExchangeRateProvider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/RateProviders/OpenExchangeRate/OpenExchangeRateProvider.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/RateProviders/OpenExchangeRate/OpenExchangeRatesClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/RateProviders/OpenExchangeRate/OpenExchangeRatesClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -183,18 +190,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/RateProviders/OpenExchangeRate/OpenExchangeRateErrorDecoder.java</url>
-          <line>70</line>
+          <line>69</line>
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/RateProviders/OpenExchangeRate/OpenExchangeRateProvider.java</url>
-          <line>38</line>
+          <line>40</line>
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/RateProviders/OpenExchangeRate/OpenExchangeRateProvider.java</url>
-          <line>35</line>
-          <option name="timeStamp" value="19" />
+          <url>file://$PROJECT_DIR$/src/main/java/com/alpha/exchangeRate/CurrencyRateService.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="21" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

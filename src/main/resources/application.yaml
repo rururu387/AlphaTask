@@ -1,0 +1,10 @@
+#Geese are cool!
+
+OpenExchangeRates:
+    URL: https://www.openexchangerates.org
+    AppId: 57676e267330400596732bd46c5e85e6
+    DefaultBaseCurrencyId: USD
+
+Giphy:
+    URL: https://api.giphy.com
+    AppId: CkoTrxQ867g5eqoGj66cVj5kUjFFhjN0

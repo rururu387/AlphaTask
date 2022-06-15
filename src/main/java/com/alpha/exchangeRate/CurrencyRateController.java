@@ -24,9 +24,10 @@ public class CurrencyRateController
     {
         // See return value of getRecentRateChange(...)
         Integer currencyRateDynamics = null;
+        // Why should I extract BaseCurrency to application.properties?
         return ResponseEntity.ok(
                 "{\n" +
-                      "\t\"recentRateChange\": " + currencyRateService.getRecentRateDynamics(quoteCurrencyId, "USD")
+                      "\t\"recentRateChange\": " + currencyRateService.getRecentRateDynamics(quoteCurrencyId, "${OpenExchangeRates.DefaultBaseCurrencyId}")
                       + "\n}");
     }
 }

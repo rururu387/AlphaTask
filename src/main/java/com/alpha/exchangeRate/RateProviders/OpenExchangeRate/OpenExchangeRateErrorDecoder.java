@@ -8,7 +8,6 @@ import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.io.IOException;
 import java.io.Reader;

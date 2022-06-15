@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
-@FeignClient(value = "openExchangeRates", url = "https://openexchangerates.org",
+@FeignClient(value = "openExchangeRates", url = "${OpenExchangeRates.URL}",
         configuration = OpenExchangeRatesClientConfig.class)
 public interface OpenExchangeRatesClient
 {

@@ -5,6 +5,7 @@ import com.alpha.exchangeRate.exceptions.RateProviderException;
 import com.alpha.exchangeRate.RateProvider;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,7 +19,8 @@ import java.time.format.DateTimeFormatter;
 @Component
 public class OpenExchangeRateProvider implements RateProvider
 {
-    public static final String applicationId = "57676e267330400596732bd46c5e85e6";
+    @Value("${OpenExchangeRate.AppId}")
+    public static final String applicationId = null;
 
     private OpenExchangeRatesClient openExchangeRatesClient = null;
 
