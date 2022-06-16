@@ -1,4 +1,4 @@
-package com.alpha.exchangeRate.RateProviders.OpenExchangeRate;
+package com.alpha.exchangeRate.rateProviders.openExchangeRate;
 
 import feign.codec.ErrorDecoder;
 import org.springframework.context.annotation.Bean;

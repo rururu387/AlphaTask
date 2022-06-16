@@ -1,11 +1,12 @@
 package com.alpha.exchangeRate;
 
-import com.alpha.exchangeRate.exceptions.RateProviderException;
+import com.alpha.common.exceptions.InvalidParametersException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -15,7 +16,7 @@ public class CurrencyRateService
     RateProvider rateProvider;
 
     @Autowired
-    public CurrencyRateService(@Qualifier("openExchangeRateProvider")RateProvider rateProvider)
+    public CurrencyRateService(@Qualifier("openExchangeRateProvider") RateProvider rateProvider)
     {
         this.rateProvider = rateProvider;
     }
@@ -28,12 +29,29 @@ public class CurrencyRateService
      * 0 rate did not change
      * 1 if one has to pay more quoteCurrencyId to buy baseCurrencyId
      */
-    public Integer getRecentRateDynamics(String quoteCurrencyId, String baseCurrencyId) throws RateProviderException
+    public RateChange getRecentRateDynamics(String quoteCurrencyId, String baseCurrencyId)
+            throws InvalidParametersException
     {
         var currentRate = rateProvider.getCurrentCurrencyRate(quoteCurrencyId, baseCurrencyId);
         var yesterdayRate = rateProvider.getHistoricalCurrencyRate(quoteCurrencyId, baseCurrencyId,
                 LocalDate.now().minusDays(1));
 
-        return currentRate.compareTo(yesterdayRate);
+        // Cast comparison result (integer) to enum
+        return RateChange.values()[currentRate.compareTo(yesterdayRate) + 1];
+    }
+
+    @Getter
+    public enum RateChange
+    {
+        DECREASED(-1),
+        UNCHANGED(0),
+        INCREASED(1);
+
+        private int numVal;
+
+        RateChange(int numVal)
+        {
+            this.numVal = numVal;
+        }
     }
 }

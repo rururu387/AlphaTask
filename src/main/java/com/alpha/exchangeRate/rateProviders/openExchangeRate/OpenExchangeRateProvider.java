@@ -1,7 +1,8 @@
-package com.alpha.exchangeRate.RateProviders.OpenExchangeRate;
+package com.alpha.exchangeRate.rateProviders.openExchangeRate;
 
-import com.alpha.exchangeRate.exceptions.InvalidQuoteCurrencyException;
-import com.alpha.exchangeRate.exceptions.RateProviderException;
+import com.alpha.common.exceptions.InvalidParametersException;
+import com.alpha.exchangeRate.rateProviders.openExchangeRate.payload.OpenExchangeResponsePayload;
+import com.alpha.exchangeRate.rateProviders.exceptions.InvalidQuoteCurrencyException;
 import com.alpha.exchangeRate.RateProvider;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,11 @@ import java.time.format.DateTimeFormatter;
 /**
  * This class implements fetching and parsing data from <a href="https://openexchangerates.org">this website</a>
  */
-@Getter
 @Component
 public class OpenExchangeRateProvider implements RateProvider
 {
-    @Value("${OpenExchangeRate.AppId}")
-    public static final String applicationId = null;
+    @Value("${OpenExchangeRates.AppId}")
+    private String applicationId;
 
     private OpenExchangeRatesClient openExchangeRatesClient = null;
 
@@ -31,18 +31,19 @@ public class OpenExchangeRateProvider implements RateProvider
     }
 
     @Override
-    public BigDecimal getCurrentCurrencyRate(String quoteCurrencyId, String baseCurrencyId) throws RateProviderException
+    public BigDecimal getCurrentCurrencyRate(String quoteCurrencyId, String baseCurrencyId)
+            throws InvalidParametersException
     {
-        OpenExchangeRatesClient.OpenExchangeRatesPayload payload = null;
+        OpenExchangeResponsePayload payload = null;
 
         payload = openExchangeRatesClient
-                .getCurrentCurrencyRate(applicationId, baseCurrencyId);
+                .getCurrentCurrencyRate(applicationId/*, baseCurrencyId*/);
 
         var requiredRateStr = payload.getRates().get(quoteCurrencyId);
 
         if (requiredRateStr == null)
         {
-            throw new InvalidQuoteCurrencyException(quoteCurrencyId);
+            throw new InvalidQuoteCurrencyException(quoteCurrencyId, "Open exchange rates", "${OpenExchangeRates.URL}");
         }
 
         return new BigDecimal(requiredRateStr);
@@ -50,17 +51,17 @@ public class OpenExchangeRateProvider implements RateProvider
 
     @Override
     public BigDecimal getHistoricalCurrencyRate(String quoteCurrencyId, String baseCurrencyId,
-                                                LocalDate date) throws RateProviderException
+                                                LocalDate date) throws InvalidParametersException
     {
         var dashDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         var payload = openExchangeRatesClient
-                .getHistoricalCurrencyRate(applicationId, baseCurrencyId, date.format(dashDateFormatter));
+                .getHistoricalCurrencyRate(applicationId, /*baseCurrencyId,*/ date.format(dashDateFormatter));
         var requiredRateStr = payload.getRates().get(quoteCurrencyId);
 
         if (requiredRateStr == null)
         {
-            throw new InvalidQuoteCurrencyException(quoteCurrencyId);
+            throw new InvalidQuoteCurrencyException(quoteCurrencyId, "Open exchange rates", "${OpenExchangeRates.URL}");
         }
 
         return new BigDecimal(requiredRateStr);

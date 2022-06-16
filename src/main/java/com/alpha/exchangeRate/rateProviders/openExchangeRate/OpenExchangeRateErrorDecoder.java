@@ -1,6 +1,7 @@
-package com.alpha.exchangeRate.RateProviders.OpenExchangeRate;
+package com.alpha.exchangeRate.rateProviders.openExchangeRate;
 
-import com.alpha.exchangeRate.exceptions.*;
+import com.alpha.common.exceptions.*;
+import com.alpha.exchangeRate.rateProviders.exceptions.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +14,11 @@ import java.io.IOException;
 import java.io.Reader;
 import java.nio.charset.StandardCharsets;
 
+/**
+ *  This class contains method that decodes all <a href = "https://docs.openexchangerates.org/docs/errors">errors </a>
+ *  that may occur during requests to OpenExchangeRates API. Status codes and messages are transferred to exceptions
+ *  here.
+ */
 @Slf4j
 public class OpenExchangeRateErrorDecoder implements ErrorDecoder
 {
@@ -58,7 +64,7 @@ public class OpenExchangeRateErrorDecoder implements ErrorDecoder
             }
             catch (IOException e)
             {
-                log.error("OpenExchangeRateErrorDecoder class: could not close reader of response body");
+                log.error("Could not close reader of response body");
             }
         }
         return message;
@@ -67,11 +73,33 @@ public class OpenExchangeRateErrorDecoder implements ErrorDecoder
     @Override
     public Exception decode(String methodKey, Response response)
     {
-        String baseMessage = "Request forwarded to OpenExchangeRate. ";
-        if (response.status() == 400)
+        if (response == null)
         {
-            return new InvalidBaseCurrencyException(baseMessage + "User provided an invalid base currency. Visit " +
-                    "https://docs.openexchangerates.org/docs/supported-currencies for more information.");
+            return new IOException("Recieved no response from OpenExchangeRates (${OpenExchangeRates.URL})");
+        }
+
+        final String serviceName = "Open exchange rate";
+        final String serviceURL = "${OpenExchangeRates.URL}";
+        switch (response.status())
+        {
+            case 400 ->
+            {
+                return new InvalidHttpRequestCurrencyException("User provided an invalid base currency. Visit " +
+                        "https://docs.openexchangerates.org/docs/supported-currencies for more information.",
+                        serviceName, serviceURL);
+            }
+
+            case 404 ->
+            {
+                return new URLNotFoundException("Could not find resource by requested path and query parameters.",
+                        serviceName, serviceURL);
+            }
+
+            case 429 ->
+            {
+                return new NoPermissionException("Server has no permission to access requested feature.",
+                        serviceName, serviceURL);
+            }
         }
 
         ExceptionMessage message = readExceptionFromBody(response);
@@ -87,11 +115,12 @@ public class OpenExchangeRateErrorDecoder implements ErrorDecoder
             {
                 if (message.getMessage().equals("missing_app_id"))
                 {
-                    return new InvalidAppIdException(baseMessage + "No application ID provided.");
+                    return new InvalidAppIdException("No application ID provided.", serviceName, serviceURL);
                 }
                 else
                 {
-                    return new InvalidAppIdException(baseMessage + "Service did not accept provided application ID.");
+                    return new InvalidAppIdException("Service did not accept provided application ID.", serviceName,
+                            serviceURL);
                 }
             }
 
@@ -99,24 +128,13 @@ public class OpenExchangeRateErrorDecoder implements ErrorDecoder
             {
                 if (message.getDescription() == null || message.getDescription().isBlank())
                 {
-                    return new AccessRestrictedException(baseMessage + "Exceeded request limit.");
+                    return new AccessRestrictedException("Exceeded request limit.", serviceName, serviceURL);
                 }
-                return new AccessRestrictedException(message.getDescription());
-            }
-
-            case 404 ->
-            {
-                return new URLNotFoundException(baseMessage + "Resource not found: " + message.getPath() + ".");
-            }
-
-            case 429 ->
-            {
-                return new NoPermissionException(baseMessage + "Server cannot access requested feature:"
-                        + message.getPath() + ".");
+                return new AccessRestrictedException(message.getDescription(), serviceName, serviceURL);
             }
         }
 
-        return new UnreadableResponseException(baseMessage + "Response contains error. Reason is unknown.");
+        return new UnreadableResponseException("Response contains error. Reason is unknown.", serviceName, serviceURL);
     }
 
     @Getter
@@ -124,7 +142,7 @@ public class OpenExchangeRateErrorDecoder implements ErrorDecoder
     @NoArgsConstructor
     @AllArgsConstructor
     @ToString
-    public static class ExceptionMessage
+    static class ExceptionMessage
     {
         private String timestamp;
         private int status;
