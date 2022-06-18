@@ -1,4 +1,4 @@
-package com.alpha.exchangeRate;
+package com.alpha.currencyExchange;
 
 import com.alpha.common.exceptions.InvalidParametersException;
 
@@ -15,7 +15,7 @@ public interface RateProvider
      * This method presents current currency rate the same way as getCurrentCurrencyRate(...) does
      * @see RateProvider#getHistoricalCurrencyRate(String, String, LocalDate)
      */
-    BigDecimal getCurrentCurrencyRate(String quoteCurrencyId, String baseCurrencyId) throws InvalidParametersException;
+    BigDecimal getLatestCurrencyRate(String quoteCurrencyId, String baseCurrencyId) throws InvalidParametersException;
     /**
      * This method is used
      * @param quoteCurrencyId iso 4217 currency id represented as string

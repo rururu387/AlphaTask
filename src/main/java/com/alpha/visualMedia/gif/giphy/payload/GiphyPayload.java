@@ -1,6 +1,7 @@
 package com.alpha.visualMedia.gif.giphy.payload;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +16,8 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-public class GiphyMediaPayload
+@AllArgsConstructor
+public class GiphyPayload
 {
     @JsonProperty("data")
     Set<GiphyObject> gifObject;

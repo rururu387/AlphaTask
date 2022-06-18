@@ -1,4 +1,4 @@
-package com.alpha.exchangeRate.rateProviders.exceptions;
+package com.alpha.currencyExchange.rateProviders.exceptions;
 
 import com.alpha.common.exceptions.InvalidParametersException;
 

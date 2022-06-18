@@ -11,7 +11,7 @@ import java.util.Random;
 import java.util.Set;
 
 @Component
-public class GiphyMediaProvider implements VisualMediaProvider
+public class GiphyProvider implements VisualMediaProvider
 {
     @Value("${Giphy.AppId}")
     private String applicationId;
@@ -19,7 +19,7 @@ public class GiphyMediaProvider implements VisualMediaProvider
     private GiphyClient giphyClient = null;
 
     @Autowired
-    public GiphyMediaProvider(GiphyClient giphyClient)
+    public GiphyProvider(GiphyClient giphyClient)
     {
         this.giphyClient = giphyClient;
     }

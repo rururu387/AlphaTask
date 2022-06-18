@@ -1,7 +1,7 @@
-package com.alpha.exchangeRate.rateProviders.openExchangeRate;
+package com.alpha.currencyExchange.rateProviders.openExchangeRates;
 
 import com.alpha.common.exceptions.*;
-import com.alpha.exchangeRate.rateProviders.exceptions.*;
+import com.alpha.currencyExchange.rateProviders.exceptions.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +20,7 @@ import java.nio.charset.StandardCharsets;
  *  here.
  */
 @Slf4j
-public class OpenExchangeRateErrorDecoder implements ErrorDecoder
+public class OpenExchangeRatesErrorDecoder implements ErrorDecoder
 {
     public ExceptionMessage readExceptionFromBody(Response response)
     {

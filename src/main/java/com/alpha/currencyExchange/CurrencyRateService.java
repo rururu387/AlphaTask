@@ -1,4 +1,4 @@
-package com.alpha.exchangeRate;
+package com.alpha.currencyExchange;
 
 import com.alpha.common.exceptions.InvalidParametersException;
 import lombok.Getter;
@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Service
@@ -16,7 +15,7 @@ public class CurrencyRateService
     RateProvider rateProvider;
 
     @Autowired
-    public CurrencyRateService(@Qualifier("openExchangeRateProvider") RateProvider rateProvider)
+    public CurrencyRateService(@Qualifier("openExchangeRatesProvider") RateProvider rateProvider)
     {
         this.rateProvider = rateProvider;
     }
@@ -29,27 +28,33 @@ public class CurrencyRateService
      * 0 rate did not change
      * 1 if one has to pay more quoteCurrencyId to buy baseCurrencyId
      */
-    public RateChange getRecentRateDynamics(String quoteCurrencyId, String baseCurrencyId)
+    public QuoteRateChange getRecentRateDynamics(String quoteCurrencyId, String baseCurrencyId)
             throws InvalidParametersException
     {
-        var currentRate = rateProvider.getCurrentCurrencyRate(quoteCurrencyId, baseCurrencyId);
+        var currentRate = rateProvider.getLatestCurrencyRate(quoteCurrencyId, baseCurrencyId);
         var yesterdayRate = rateProvider.getHistoricalCurrencyRate(quoteCurrencyId, baseCurrencyId,
                 LocalDate.now().minusDays(1));
 
         // Cast comparison result (integer) to enum
-        return RateChange.values()[currentRate.compareTo(yesterdayRate) + 1];
+        return QuoteRateChange.values()[currentRate.compareTo(yesterdayRate) + 1];
     }
 
+    /**
+     * Enum describes rate change of quote currency.
+     * If one has to pay more quote currency than before to buy base currency then use FALL state.
+     * If one has to pay the same amount of quote currency than before - STABLE state.
+     * If one has to pay less quote currency - GAIN state.
+     */
     @Getter
-    public enum RateChange
+    public enum QuoteRateChange
     {
-        DECREASED(-1),
-        UNCHANGED(0),
-        INCREASED(1);
+        FALL(-1),
+        STABLE(0),
+        GAIN(1);
 
         private int numVal;
 
-        RateChange(int numVal)
+        QuoteRateChange(int numVal)
         {
             this.numVal = numVal;
         }

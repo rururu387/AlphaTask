@@ -7,10 +7,13 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.method.HandlerMethod;
 
@@ -30,7 +33,7 @@ public class MemeController
         this.memeService = memeService;
     }
 
-    @GetMapping("/usd-rate/random-contemporary-memes")
+    @GetMapping(value = "/usd-rate/random-contemporary-memes", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getContemporaryMeme(@RequestParam("quoteCurrencyId") String quoteCurrencyId)
             throws InvalidParametersException, JsonProcessingException
     {

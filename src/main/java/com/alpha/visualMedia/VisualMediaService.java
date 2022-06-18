@@ -12,7 +12,7 @@ public class VisualMediaService
     VisualMediaProvider visualMediaProvider;
 
     @Autowired
-    public VisualMediaService(@Qualifier("giphyMediaProvider") VisualMediaProvider visualMediaProvider)
+    public VisualMediaService(@Qualifier("giphyProvider") VisualMediaProvider visualMediaProvider)
     {
         this.visualMediaProvider = visualMediaProvider;
     }

@@ -1,7 +1,7 @@
 package com.alpha.meme;
 
 import com.alpha.common.exceptions.InvalidParametersException;
-import com.alpha.exchangeRate.CurrencyRateService;
+import com.alpha.currencyExchange.CurrencyRateService;
 import com.alpha.visualMedia.VisualMediaObject;
 import com.alpha.visualMedia.VisualMediaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -36,17 +36,17 @@ public class MemeService
 
         switch (recentRateDynamics)
         {
-            case INCREASED ->
+            case GAIN ->
             {
                 visualMediaObjectSet = mediaService.getMediaObjectsByDescription("rich");
             }
 
-            case UNCHANGED ->
+            case STABLE ->
             {
                 visualMediaObjectSet = mediaService.getMediaObjectsByDescription("patience");
             }
 
-            case DECREASED ->
+            case FALL ->
             {
                 visualMediaObjectSet = mediaService.getMediaObjectsByDescription("broke");
             }
