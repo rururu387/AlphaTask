@@ -1,9 +1,7 @@
 package com.alpha.com.visualMedia.gif.giphy;
 
-import com.alpha.Main;
 import com.alpha.visualMedia.gif.giphy.GiphyClient;
 import com.alpha.visualMedia.gif.giphy.GiphyProvider;
-import com.alpha.visualMedia.gif.giphy.payload.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,9 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
-import org.springframework.stereotype.Component;
-
-import java.util.HashSet;
 
 import static com.alpha.ResponseObjectFactory.initializeGooseGifResponseEntity;
 

@@ -84,7 +84,7 @@ public class OpenExchangeRatesErrorDecoder implements ErrorDecoder
         {
             case 400 ->
             {
-                return new InvalidHttpRequestCurrencyException("User provided an invalid base currency. Visit " +
+                return new InvalidBaseCurrencyException("User provided an invalid base currency. Visit " +
                         "https://docs.openexchangerates.org/docs/supported-currencies for more information.",
                         serviceName, serviceURL);
             }

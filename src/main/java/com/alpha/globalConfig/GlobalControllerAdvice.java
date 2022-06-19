@@ -16,25 +16,18 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * This controller advice handles exceptions that unambiguously define handle algorithm by their nature (class
  * membership).
+ * @Note All 4xx and 5xx responses should contain additional information. Wrapper class:
+ * {@link GeneralExceptionResponse}
  */
 @ControllerAdvice
 public class GlobalControllerAdvice
 {
-    @ExceptionHandler({Throwable.class})
-    public ResponseEntity<?> defaultExceptionHandler(HttpRequestException e, HandlerMethod handlerMethod,
-                                                     HttpServletRequest request)
-    {
-        GeneralExceptionResponse response = new GeneralExceptionResponse(e.getMessage(), request,
-                HttpStatus.INTERNAL_SERVER_ERROR.value());
-        return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(response);
-                //new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-
     @ExceptionHandler({InvalidAppIdException.class, NoPermissionException.class, URLNotFoundException.class})
     public ResponseEntity<?> handleInternalOpenExchangeRateExceptions(HttpRequestException e,
                                                                       HandlerMethod handlerMethod,
                                                                       HttpServletRequest request)
     {
+        //return null;
         return defaultExceptionHandler(e, handlerMethod, request);
     }
 
@@ -57,7 +50,7 @@ public class GlobalControllerAdvice
         return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(response);
     }
 
-    @ExceptionHandler({InvalidHttpRequestCurrencyException.class, InvalidQuoteCurrencyException.class,
+    @ExceptionHandler({InvalidBaseCurrencyException.class, InvalidQuoteCurrencyException.class,
             InvalidParametersException.class, URITooLongException.class})
     public ResponseEntity<?> handleOpenExchangeRatesExceptions(InvalidParametersException e,
                                                                HandlerMethod handlerMethod, HttpServletRequest request)
@@ -65,5 +58,15 @@ public class GlobalControllerAdvice
         GeneralExceptionResponse response = new GeneralExceptionResponse(e.getMessage(), request,
                 HttpStatus.BAD_REQUEST.value());
         return ResponseEntity.badRequest().contentType(MediaType.APPLICATION_JSON).body(response);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<?> defaultExceptionHandler(HttpRequestException e, HandlerMethod handlerMethod,
+                                                     HttpServletRequest request)
+    {
+        GeneralExceptionResponse response = new GeneralExceptionResponse(e.getMessage(), request,
+                HttpStatus.INTERNAL_SERVER_ERROR.value());
+        return ResponseEntity.internalServerError().contentType(MediaType.APPLICATION_JSON).body(response);
+        //new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

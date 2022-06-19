@@ -1,6 +1,7 @@
 package com.alpha.currencyExchange.rateProviders.openExchangeRates;
 
 import com.alpha.common.exceptions.InvalidParametersException;
+import com.alpha.common.exceptions.UnreadableResponseException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -37,7 +38,7 @@ public class OpenExchangeRatesProviderTest
     }
 
     @Test
-    public void getCurrentCurrencyRateTest() throws InvalidParametersException
+    public void getCurrentCurrencyRateTest() throws InvalidParametersException, UnreadableResponseException
     {
         Mockito.doReturn(initializeRateResponseEntity())
                 .when(openExchangeRatesClientStub)
@@ -65,7 +66,7 @@ public class OpenExchangeRatesProviderTest
     }
 
     @Test
-    public void getHistoricalCurrencyRateTest() throws InvalidParametersException
+    public void getHistoricalCurrencyRateTest() throws InvalidParametersException, UnreadableResponseException
     {
         Mockito.when(openExchangeRatesClientStub.getHistoricalCurrencyRate("2010-04-11",
                         environment.getProperty("OpenExchangeRates.AppId")))

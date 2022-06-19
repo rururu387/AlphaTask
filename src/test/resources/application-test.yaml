@@ -1,0 +1,12 @@
+spring:
+  profile:
+    active: test
+
+#Application-specific configurations
+
+OpenExchangeRates:
+    Port: 3827
+    URL: http://localhost:${OpenExchangeRates.Port}
+Giphy:
+    Port: 7364
+    URL: http://localhost:${Giphy.Port}

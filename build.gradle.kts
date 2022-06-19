@@ -14,6 +14,9 @@ repositories {
 }
 
 dependencies {
+    // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-contract-wiremock
+    implementation("org.springframework.cloud:spring-cloud-contract-wiremock:3.1.3")
+
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
 

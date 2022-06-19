@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(value = "giphy", url = "${Giphy.URL}", configuration = GiphyClientConfig.class)
 public interface GiphyClient
 {
-    @GetMapping(value = "v1/gifs/search", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/v1/gifs/search", consumes = MediaType.APPLICATION_JSON_VALUE)
     GiphyPayload getGifByDescription(@RequestParam("api_key") String applicationId,
                                      @RequestParam("q") String description,
                                      @RequestParam("offset") Integer mediaOffset,

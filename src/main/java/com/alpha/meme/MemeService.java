@@ -1,6 +1,7 @@
 package com.alpha.meme;
 
 import com.alpha.common.exceptions.InvalidParametersException;
+import com.alpha.common.exceptions.UnreadableResponseException;
 import com.alpha.currencyExchange.CurrencyRateService;
 import com.alpha.visualMedia.VisualMediaObject;
 import com.alpha.visualMedia.VisualMediaService;
@@ -28,7 +29,7 @@ public class MemeService
     }
 
     public String getRecentRateMemes(String quoteCurrencyId, String baseCurrencyId) throws InvalidParametersException,
-            JsonProcessingException
+            JsonProcessingException, UnreadableResponseException
     {
         var recentRateDynamics = currencyRateService.getRecentRateDynamics(quoteCurrencyId,
                 baseCurrencyId);

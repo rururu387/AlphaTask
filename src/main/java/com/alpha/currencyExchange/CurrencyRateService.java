@@ -1,6 +1,7 @@
 package com.alpha.currencyExchange;
 
 import com.alpha.common.exceptions.InvalidParametersException;
+import com.alpha.common.exceptions.UnreadableResponseException;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,7 +30,7 @@ public class CurrencyRateService
      * 1 if one has to pay more quoteCurrencyId to buy baseCurrencyId
      */
     public QuoteRateChange getRecentRateDynamics(String quoteCurrencyId, String baseCurrencyId)
-            throws InvalidParametersException
+            throws InvalidParametersException, UnreadableResponseException
     {
         var currentRate = rateProvider.getLatestCurrencyRate(quoteCurrencyId, baseCurrencyId);
         var yesterdayRate = rateProvider.getHistoricalCurrencyRate(quoteCurrencyId, baseCurrencyId,

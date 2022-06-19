@@ -2,6 +2,7 @@ package com.alpha.meme;
 
 import com.alpha.GeneralExceptionResponse;
 import com.alpha.common.exceptions.InvalidParametersException;
+import com.alpha.common.exceptions.UnreadableResponseException;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -35,7 +36,7 @@ public class MemeController
 
     @GetMapping(value = "/usd-rate/random-contemporary-memes", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getContemporaryMeme(@RequestParam("quoteCurrencyId") String quoteCurrencyId)
-            throws InvalidParametersException, JsonProcessingException
+            throws InvalidParametersException, JsonProcessingException, UnreadableResponseException
     {
         String responseBody = memeService.getRecentRateMemes(quoteCurrencyId,
                 "${OpenExchangeRates.DefaultBaseCurrencyId}");
