@@ -44,14 +44,20 @@ sourceSets {
     main {
         java {
             srcDir("/src/main")
-            exclude("/src/main/resources/webApp/**")
+            exclude("**/webApp/**")
         }
     }
     test {
         java {
             srcDir("/src/test")
-            exclude("/src/main/resources/webApp/**")
+            exclude("**/webApp/**")
         }
+    }
+}
+
+tasks {
+    processResources {
+        exclude("**/webApp/**")
     }
 }
 

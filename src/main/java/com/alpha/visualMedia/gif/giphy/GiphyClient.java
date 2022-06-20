@@ -25,6 +25,6 @@ public interface GiphyClient
                                              String description,
                                              Integer mediaOffset)
     {
-        return this.getGifByDescription(applicationId, description, mediaOffset, "1", "g", "HD");
+        return this.getGifByDescription(applicationId, description, mediaOffset, "${{Giphy.GifAmount}}", "g", "HD");
     }
 }

@@ -27,3 +27,4 @@ Giphy:
     URL: https://api.giphy.com
     # Should be hidden from everyone!
     AppId: CkoTrxQ867g5eqoGj66cVj5kUjFFhjN0
+    GifAmount: 5

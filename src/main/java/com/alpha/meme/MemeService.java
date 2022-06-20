@@ -44,7 +44,9 @@ public class MemeService
     {
         /*var visualMediaObjectStub = new VisualMediaObject("wYQLDWPoddIyM0AolF", "https://media3.giphy.com/media/wYQLDWPoddIyM0AolF/giphy.gif?cid=c1de2e83xmngjtb4an4dmzeb7t1r9azvhe8si801k4cluf98&rid=giphy.gif&ct=g",
                 600, 600, "Mental Health GIF by mtv");
-        var responseStub = new RecentRateMemeResponse(new HashSet<VisualMediaObject>() {{ add(visualMediaObjectStub); }}, CurrencyRateService.QuoteRateChange.STABLE);
+        var visualMediaObjectStub2 = new VisualMediaObject("wYQLDWPoddIyM0AolF", "https://media3.giphy.com/media/wYQLDWPoddIyM0AolF/giphy.gif?cid=c1de2e83xmngjtb4an4dmzeb7t1r9azvhe8si801k4cluf98&rid=giphy.gif&ct=g",
+                600, 600, "Mental Health GIF by mtv");
+        var responseStub = new RecentRateMemeResponse(new HashSet<VisualMediaObject>() {{ add(visualMediaObjectStub); add(visualMediaObjectStub2); }}, CurrencyRateService.QuoteRateChange.STABLE);
         return responseStub;*/
         var recentRateDynamics = currencyRateService.getRecentRateDynamics(quoteCurrencyId,
                 baseCurrencyId);
