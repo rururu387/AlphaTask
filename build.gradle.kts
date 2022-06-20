@@ -1,15 +1,24 @@
-import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
+group = "com.alpha"
+version = "1.0-SNAPSHOT"
 
 plugins {
     application
     java
 }
 
-group = "org.test"
-version = "1.0-SNAPSHOT"
+application {
+    mainClass.set("com.alpha.Main")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
 
 val springBootVersion by extra { "2.7.0" }
 val lombokVersion by extra { "1.18.24" }
+val slf4jVersion by extra { "1.7.36" }
 val springCloudOpenFeignVersion by extra { "3.1.3" }
 
 repositories {
@@ -29,14 +38,24 @@ dependencies {
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-openfeign
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign:$springCloudOpenFeignVersion")
 
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+
+    // https://mvnrepository.com/artifact/org.slf4j/slf4j-simple
+    implementation("org.slf4j:slf4j-simple:$slf4jVersion")
+
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 }
 
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+configurations.implementation {
+    exclude(group = "ch.qos.logback", module = "logback-classic")
+}
+
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "com.alpha.Main"
     }
 }
 

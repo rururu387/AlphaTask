@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
+import org.springframework.test.context.ActiveProfiles;
 
 import static com.alpha.ResponseObjectFactory.initializeGooseGifResponseEntity;
 
@@ -19,6 +20,7 @@ import static com.alpha.ResponseObjectFactory.initializeGooseGifResponseEntity;
  * This class contains unit test(s) of GiphyProvider
  */
 @SpringBootTest
+@ActiveProfiles("test")
 @ExtendWith({MockitoExtension.class})
 public class GiphyProviderTest
 {
@@ -42,7 +44,7 @@ public class GiphyProviderTest
     {
         Mockito.doReturn(initializeGooseGifResponseEntity()).when(giphyClientStub)
                 .getGifByDescription(Mockito.eq(environment.getProperty("Giphy.AppId")), Mockito.eq("Goose"),
-                        Mockito.anyInt(), 1);
+                        Mockito.anyInt(), Mockito.eq(1));
 
         var visualMediaObjects = giphyProvider.getVisualMediaByDescription("Goose");
 

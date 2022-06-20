@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.env.Environment;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ import static com.alpha.ResponseObjectFactory.initializeRateResponseEntity;
  * This class contains unit tests of OpenExchangeRatesProvider
  */
 @SpringBootTest
+@ActiveProfiles("test")
 @ExtendWith({MockitoExtension.class})
 public class OpenExchangeRatesProviderTest
 {
