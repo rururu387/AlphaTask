@@ -11,10 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.MimeType;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.method.HandlerMethod;
 
@@ -24,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
  * This is a controller that allows users get memes about rate changes.
  */
 @Controller
+@CrossOrigin(origins = "http://localhost:4200")
 public class MemeController
 {
     MemeService memeService;
@@ -34,14 +34,12 @@ public class MemeController
         this.memeService = memeService;
     }
 
-    @GetMapping(value = "/usd-rate/random-contemporary-memes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/api/v1/usd-rate/random-contemporary-memes", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getContemporaryMeme(@RequestParam("quoteCurrencyId") String quoteCurrencyId)
             throws InvalidParametersException, JsonProcessingException, UnreadableResponseException
     {
-        String responseBody = memeService.getRecentRateMemes(quoteCurrencyId,
-                "${OpenExchangeRates.DefaultBaseCurrencyId}");
-
-        return ResponseEntity.ok(responseBody);
+        return ResponseEntity.ok(memeService.getRecentRateMemes(quoteCurrencyId,
+                "${OpenExchangeRates.DefaultBaseCurrencyId}"));
     }
 
     @ExceptionHandler(JsonParseException.class)

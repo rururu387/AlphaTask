@@ -1,13 +1,8 @@
 package com.alpha.meme;
 
 import com.alpha.ResponseObjectFactory;
-import com.alpha.currencyExchange.rateProviders.openExchangeRates.OpenExchangeRatesClient;
-import com.alpha.currencyExchange.rateProviders.openExchangeRates.OpenExchangeRatesErrorDecoder;
 import com.alpha.globalConfig.GlobalErrorMatcher;
 import com.alpha.globalConfig.WireMockServerConfig;
-import com.alpha.visualMedia.gif.giphy.GiphyClient;
-import com.alpha.visualMedia.gif.giphy.GiphyErrorDecoder;
-import com.alpha.visualMedia.gif.giphy.payload.GiphyPayload;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -104,16 +99,16 @@ public class MemeControllerTest
                         .withBody(objectMapper.writeValueAsString(ResponseObjectFactory
                                 .initializeGooseGifResponseEntity()))));
 
-        this.mockMvc.perform(get("/usd-rate/random-contemporary-memes")
+        this.mockMvc.perform(get("/api/v1/usd-rate/random-contemporary-memes")
                         .accept(MediaType.APPLICATION_JSON)
                         .param("quoteCurrencyId", "BBD")
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].id", Matchers.is("lQRwl2XKnHJWE")))
-                .andExpect(jsonPath("$.[0].URL", Matchers.is("https://giphy.com/embed/lQRwl2XKnHJWE")))
-                .andExpect(jsonPath("$.[0].hSizePixels", Matchers.is(480)))
-                .andExpect(jsonPath("$.[0].vSizePixels", Matchers.is(261)))
-                .andExpect(jsonPath("$.[0].title", Matchers.is("Goose image")));
+                .andExpect(jsonPath("$.visualMediaObjects.[0].id", Matchers.is("lQRwl2XKnHJWE")))
+                .andExpect(jsonPath("$.visualMediaObjects.[0].URL", Matchers.is("https://giphy.com/embed/lQRwl2XKnHJWE")))
+                .andExpect(jsonPath("$.visualMediaObjects.[0].hSizePixels", Matchers.is(261)))
+                .andExpect(jsonPath("$.visualMediaObjects.[0].wSizePixels", Matchers.is(480)))
+                .andExpect(jsonPath("$.visualMediaObjects.[0].title", Matchers.is("Goose image")));
     }
 
     /**
@@ -136,7 +131,7 @@ public class MemeControllerTest
                                 "  \"description\": \"Your advertising could be here\"\n" +
                                 "}")));
 
-        var resultActions = this.mockMvc.perform(get("/usd-rate/random-contemporary-memes")
+        var resultActions = this.mockMvc.perform(get("/api/v1/usd-rate/random-contemporary-memes")
                 .accept(MediaType.APPLICATION_JSON)
                 .param("quoteCurrencyId", "BBD")
         );
@@ -144,7 +139,7 @@ public class MemeControllerTest
         GlobalErrorMatcher.isErrorResponseFormattedCorrectly(resultActions, HttpStatus.BAD_REQUEST,
                 "User provided an invalid base currency. Visit " +
                         "https://docs.openexchangerates.org/docs/supported-currencies for more information.",
-                "http://localhost/usd-rate/random-contemporary-memes",
+                "http://localhost/api/v1/usd-rate/random-contemporary-memes",
                 java.util.Map.of("quoteCurrencyId", new String[]{"BDD"}));
 
     }
@@ -161,7 +156,7 @@ public class MemeControllerTest
                         .withBody(objectMapper.writeValueAsString(ResponseObjectFactory.initializeRateResponseEntity()))
                 ));
 
-        var resultActions = this.mockMvc.perform(get("/usd-rate/random-contemporary-memes")
+        var resultActions = this.mockMvc.perform(get("/api/v1/usd-rate/random-contemporary-memes")
                 .accept(MediaType.APPLICATION_JSON)
                 .param("quoteCurrencyId", "Geese are cool!")
         );
@@ -169,7 +164,7 @@ public class MemeControllerTest
         GlobalErrorMatcher.isErrorResponseFormattedCorrectly(resultActions, HttpStatus.BAD_REQUEST,
                 "User provided an invalid quote currency. Visit " +
                         "https://docs.openexchangerates.org/docs/supported-currencies for more information.",
-                "http://localhost/usd-rate/random-contemporary-memes",
+                "http://localhost/api/v1/usd-rate/random-contemporary-memes",
                 java.util.Map.of("quoteCurrencyId", new String[]{"Geese are cool!"}));
     }
 }

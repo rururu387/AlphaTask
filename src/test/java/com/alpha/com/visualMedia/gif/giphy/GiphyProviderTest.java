@@ -15,6 +15,9 @@ import org.springframework.core.env.Environment;
 
 import static com.alpha.ResponseObjectFactory.initializeGooseGifResponseEntity;
 
+/**
+ * This class contains unit test(s) of GiphyProvider
+ */
 @SpringBootTest
 @ExtendWith({MockitoExtension.class})
 public class GiphyProviderTest
@@ -51,7 +54,7 @@ public class GiphyProviderTest
         Assertions.assertEquals("lQRwl2XKnHJWE", visualMediaObject.getId());
         Assertions.assertEquals("Goose image", visualMediaObject.getTitle());
         Assertions.assertEquals("https://giphy.com/embed/lQRwl2XKnHJWE", visualMediaObject.getURL());
-        Assertions.assertEquals(480, visualMediaObject.getHSizePixels());
-        Assertions.assertEquals(261, visualMediaObject.getVSizePixels());
+        Assertions.assertEquals(261, visualMediaObject.getHSizePixels());
+        Assertions.assertEquals(480, visualMediaObject.getWSizePixels());
     }
 }

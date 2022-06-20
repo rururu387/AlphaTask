@@ -17,7 +17,7 @@ public class VisualMediaObject
     private String URL;
     @JsonProperty("hSizePixels")
     private Integer hSizePixels;
-    @JsonProperty("vSizePixels")
-    private Integer vSizePixels;
+    @JsonProperty("wSizePixels")
+    private Integer wSizePixels;
     private String title;
 }

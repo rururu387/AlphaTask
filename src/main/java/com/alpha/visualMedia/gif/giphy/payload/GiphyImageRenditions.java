@@ -19,7 +19,4 @@ public class GiphyImageRenditions
 {
     @JsonProperty("original")
     GiphyOriginalImageRendition originalRendition;
-    @JsonProperty("hd")
-    @JsonAlias({"HD", "mp4"})
-    Object hd;
 }

@@ -6,6 +6,7 @@ build/
 gradle/*
 gradlew
 gradlew.bat
+src/main/resources/webApp/*
 
 ### IntelliJ IDEA ###
 .idea/modules.xml

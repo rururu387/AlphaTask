@@ -2,18 +2,11 @@ package com.alpha.visualMedia.gif.giphy;
 
 import com.alpha.common.exceptions.*;
 import com.alpha.visualMedia.gif.giphy.exceptions.URITooLongException;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
-import java.io.Reader;
-import java.nio.charset.StandardCharsets;
-
 /**
  * This class contains method that decodes all <a href = "https://developers.giphy.com/docs/api#response-codes">errors
  * </a> that may occur during requests to Giphy API. Status codes are transferred to exceptions here.

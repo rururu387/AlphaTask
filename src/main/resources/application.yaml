@@ -19,9 +19,11 @@ feign:
 
 OpenExchangeRates:
     URL: https://www.openexchangerates.org
+    # Should be hidden from everyone! But it's a training task so I commited it
     AppId: 57676e267330400596732bd46c5e85e6
     DefaultBaseCurrencyId: USD
 
 Giphy:
     URL: https://api.giphy.com
+    # Should be hidden from everyone!
     AppId: CkoTrxQ867g5eqoGj66cVj5kUjFFhjN0

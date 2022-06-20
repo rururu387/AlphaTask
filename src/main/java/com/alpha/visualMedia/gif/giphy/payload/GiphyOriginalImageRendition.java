@@ -18,6 +18,6 @@ public class GiphyOriginalImageRendition
 {
     private Integer width;
     private Integer height;
-    @JsonProperty("mp4")
-    private String mp4MediaURL;
+    @JsonProperty("url")
+    private String gifMediaURL;
 }

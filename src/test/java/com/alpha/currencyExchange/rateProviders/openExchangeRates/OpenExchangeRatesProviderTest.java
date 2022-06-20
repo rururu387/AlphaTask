@@ -18,6 +18,9 @@ import java.time.LocalDate;
 
 import static com.alpha.ResponseObjectFactory.initializeRateResponseEntity;
 
+/**
+ * This class contains unit tests of OpenExchangeRatesProvider
+ */
 @SpringBootTest
 @ExtendWith({MockitoExtension.class})
 public class OpenExchangeRatesProviderTest

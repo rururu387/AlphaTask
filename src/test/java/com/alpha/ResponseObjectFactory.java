@@ -26,7 +26,7 @@ public class ResponseObjectFactory
 
         var gooseOriginalImageRendition = new GiphyOriginalImageRendition(480, 261,
                 "https://giphy.com/embed/lQRwl2XKnHJWE");
-        var gooseImageRenditions = new GiphyImageRenditions(gooseOriginalImageRendition, null);
+        var gooseImageRenditions = new GiphyImageRenditions(gooseOriginalImageRendition);
         var gooseGiphyObject = new GiphyObject("lQRwl2XKnHJWE", "Goose image", gooseImageRenditions);
         giphyObjects.add(gooseGiphyObject);
 

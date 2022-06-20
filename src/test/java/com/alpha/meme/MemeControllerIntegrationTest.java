@@ -8,7 +8,6 @@ import com.alpha.visualMedia.gif.giphy.GiphyClient;
 import com.alpha.visualMedia.gif.giphy.GiphyErrorDecoder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.WireMockServer;
-import com.github.tomakehurst.wiremock.client.WireMock;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -33,7 +32,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
- * Using @MockBean to test service. Testing only Http.OK responses.
+ * Using @MockBean to implement integration tests. Mocking whole feign client interface. Thus, error decoder and json
+ * serializer are not invoked and tested.
+ * Testes only for Http.OK responses.
  */
 @ExtendWith({MockitoExtension.class})
 @AutoConfigureMockMvc
@@ -89,15 +90,15 @@ public class MemeControllerIntegrationTest
                 .getGifByDescription(Mockito.eq(environment.getProperty("Giphy.AppId")), Mockito.eq("patience"),
                         Mockito.anyInt());
 
-        this.mockMvc.perform(get("/usd-rate/random-contemporary-memes")
+        this.mockMvc.perform(get("/api/v1/usd-rate/random-contemporary-memes")
                         .accept(MediaType.APPLICATION_JSON)
                         .param("quoteCurrencyId", "BBD")
                 )
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.[0].id", Matchers.is("lQRwl2XKnHJWE")))
-                .andExpect(jsonPath("$.[0].URL", Matchers.is("https://giphy.com/embed/lQRwl2XKnHJWE")))
-                .andExpect(jsonPath("$.[0].hSizePixels", Matchers.is(480)))
-                .andExpect(jsonPath("$.[0].vSizePixels", Matchers.is(261)))
-                .andExpect(jsonPath("$.[0].title", Matchers.is("Goose image")));
+                .andExpect(jsonPath("$.visualMediaObjects.[0].id", Matchers.is("lQRwl2XKnHJWE")))
+                .andExpect(jsonPath("$.visualMediaObjects.[0].URL", Matchers.is("https://giphy.com/embed/lQRwl2XKnHJWE")))
+                .andExpect(jsonPath("$.visualMediaObjects.[0].hSizePixels", Matchers.is(261)))
+                .andExpect(jsonPath("$.visualMediaObjects.[0].wSizePixels", Matchers.is(480)))
+                .andExpect(jsonPath("$.visualMediaObjects.[0].title", Matchers.is("Goose image")));
     }
 }

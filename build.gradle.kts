@@ -1,5 +1,8 @@
+import org.gradle.internal.impldep.org.junit.experimental.categories.Categories.CategoryFilter.exclude
+
 plugins {
-    id("java")
+    application
+    java
 }
 
 group = "org.test"
@@ -29,6 +32,27 @@ dependencies {
     // https://mvnrepository.com/artifact/org.projectlombok/lombok
     compileOnly("org.projectlombok:lombok:$lombokVersion")
     annotationProcessor("org.projectlombok:lombok:$lombokVersion")
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(17))
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir("/src/main")
+            exclude("/src/main/resources/webApp/**")
+        }
+    }
+    test {
+        java {
+            srcDir("/src/test")
+            exclude("/src/main/resources/webApp/**")
+        }
+    }
 }
 
 tasks.getByName<Test>("test") {

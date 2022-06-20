@@ -24,6 +24,12 @@ public class GiphyProvider implements VisualMediaProvider
         this.giphyClient = giphyClient;
     }
 
+    /**
+     * Performs request to Giphy server.
+     * @param description query string that gets passed to Giphy as a query parameter to search for.
+     * @return set of gif's metatada objects. For application to be easier to extend return value is a set, not a
+     * single object, even though task was to display a single gif.
+     */
     @Override
     public Set<VisualMediaObject> getVisualMediaByDescription(String description)
     {
@@ -36,9 +42,9 @@ public class GiphyProvider implements VisualMediaProvider
         for (var image : giphyObject.getGifObject())
         {
             var visualMediaObject = new VisualMediaObject(image.getId(),
-                                    image.getImages().getOriginalRendition().getMp4MediaURL(),
-                                    image.getImages().getOriginalRendition().getWidth(),
+                                    image.getImages().getOriginalRendition().getGifMediaURL(),
                                     image.getImages().getOriginalRendition().getHeight(),
+                                    image.getImages().getOriginalRendition().getWidth(),
                                     image.getTitle());
 
             visualMediaObjectSet.add(visualMediaObject);
