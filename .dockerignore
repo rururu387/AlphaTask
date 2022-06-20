@@ -1,0 +1,6 @@
+**/webApp/**
+.gradle/*
+.git/*
+.idea/*
+build/*
+.gitignore

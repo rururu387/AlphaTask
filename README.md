@@ -3,7 +3,7 @@
 Application can be run using docker:<br>
 <br>
 (sudo) docker pull rururu387/alpha-task:backend-v1.0 <br>
-(sudo) docker run -d -it -p 8080:80 rururu387/alpha-task:backend-v1.0 <br>
+(sudo) docker run -d -it -p 8080:8080 rururu387/alpha-task:backend-v1.0 <br>
 <br>
 Server can be accessed via 
 [frontend client]("https://github.com/rururu387/AlphaTaskFrontend").

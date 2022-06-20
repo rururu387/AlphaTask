@@ -4,6 +4,7 @@ version = "1.0-SNAPSHOT"
 plugins {
     application
     java
+    id("org.springframework.boot") version "2.7.0"
 }
 
 application {
@@ -20,6 +21,7 @@ val springBootVersion by extra { "2.7.0" }
 val lombokVersion by extra { "1.18.24" }
 val slf4jVersion by extra { "1.7.36" }
 val springCloudOpenFeignVersion by extra { "3.1.3" }
+val wireMockVersion by extra { "3.1.3" }
 
 repositories {
     mavenCentral()
@@ -27,7 +29,7 @@ repositories {
 
 dependencies {
     // https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-contract-wiremock
-    implementation("org.springframework.cloud:spring-cloud-contract-wiremock:3.1.3")
+    implementation("org.springframework.cloud:spring-cloud-contract-wiremock:$wireMockVersion")
 
     // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test
     testImplementation("org.springframework.boot:spring-boot-starter-test:$springBootVersion")
@@ -53,12 +55,6 @@ configurations.implementation {
     exclude(group = "ch.qos.logback", module = "logback-classic")
 }
 
-tasks.withType<Jar> {
-    manifest {
-        attributes["Main-Class"] = "com.alpha.Main"
-    }
-}
-
 sourceSets {
     main {
         java {
@@ -78,8 +74,8 @@ tasks {
     processResources {
         exclude("**/webApp/**")
     }
-}
 
-tasks.getByName<Test>("test") {
-    useJUnitPlatform()
+    getByName<Test>("test") {
+        useJUnitPlatform()
+    }
 }
