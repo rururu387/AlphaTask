@@ -17,14 +17,15 @@ public interface GiphyClient
     GiphyPayload getGifByDescription(@RequestParam("api_key") String applicationId,
                                      @RequestParam("q") String description,
                                      @RequestParam("offset") Integer mediaOffset,
-                                     @RequestParam("limit") String mediaAmount,
+                                     @RequestParam("limit") Integer mediaAmount,
                                      @RequestParam("rating") String safetyRating,
                                      @RequestParam("bundle") String rendition);
 
     default GiphyPayload getGifByDescription(String applicationId,
                                              String description,
-                                             Integer mediaOffset)
+                                             Integer mediaOffset,
+                                             Integer mediaAmount)
     {
-        return this.getGifByDescription(applicationId, description, mediaOffset, "${{Giphy.GifAmount}}", "g", "HD");
+        return this.getGifByDescription(applicationId, description, mediaOffset, mediaAmount, "g", "HD");
     }
 }

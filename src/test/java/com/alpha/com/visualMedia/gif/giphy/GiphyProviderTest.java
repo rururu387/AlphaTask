@@ -42,7 +42,7 @@ public class GiphyProviderTest
     {
         Mockito.doReturn(initializeGooseGifResponseEntity()).when(giphyClientStub)
                 .getGifByDescription(Mockito.eq(environment.getProperty("Giphy.AppId")), Mockito.eq("Goose"),
-                        Mockito.anyInt());
+                        Mockito.anyInt(), 1);
 
         var visualMediaObjects = giphyProvider.getVisualMediaByDescription("Goose");
 

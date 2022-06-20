@@ -4,6 +4,7 @@ import com.alpha.visualMedia.VisualMediaObject;
 import com.alpha.visualMedia.VisualMediaProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -18,10 +19,13 @@ public class GiphyProvider implements VisualMediaProvider
 
     private GiphyClient giphyClient = null;
 
+    private Environment environment;
+
     @Autowired
-    public GiphyProvider(GiphyClient giphyClient)
+    public GiphyProvider(GiphyClient giphyClient, Environment environment)
     {
         this.giphyClient = giphyClient;
+        this.environment = environment;
     }
 
     /**
@@ -35,7 +39,8 @@ public class GiphyProvider implements VisualMediaProvider
     {
         Random randomGenerator = new Random();
         var randomMediaNumber = randomGenerator.ints(0, 25).findFirst().getAsInt();
-        var giphyObject = giphyClient.getGifByDescription(applicationId, description, randomMediaNumber);
+        var giphyObject = giphyClient.getGifByDescription(applicationId, description, randomMediaNumber,
+                Integer.valueOf(environment.getProperty("Giphy.GifAmount")));
 
         var visualMediaObjectSet = new HashSet<VisualMediaObject>();
 

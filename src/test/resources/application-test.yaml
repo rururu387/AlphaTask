@@ -10,3 +10,4 @@ OpenExchangeRates:
 Giphy:
     Port: 7364
     URL: http://localhost:${Giphy.Port}
+    GifAmount: 1

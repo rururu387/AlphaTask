@@ -88,7 +88,7 @@ public class MemeControllerIntegrationTest
 
         Mockito.doReturn(ResponseObjectFactory.initializeGooseGifResponseEntity()).when(giphyClientMock)
                 .getGifByDescription(Mockito.eq(environment.getProperty("Giphy.AppId")), Mockito.eq("patience"),
-                        Mockito.anyInt());
+                        Mockito.anyInt(), 1);
 
         this.mockMvc.perform(get("/api/v1/usd-rate/random-contemporary-memes")
                         .accept(MediaType.APPLICATION_JSON)
